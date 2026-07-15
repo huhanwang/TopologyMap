@@ -1788,8 +1788,10 @@ json laneRegionDebugToJson(
     j["ok"] = result.ok;
     if (!result.error.empty()) j["error"] = result.error;
     j["frame_id"] = result.frame_id;
-    j["source"] = "completed_frenet_tracks";
+    j["source"] = "completed_boundary_tracks";
     j["regions"] = json::array();
+    j["completed_boundary_tracks"] = json::array();
+    j["completed_boundary_connectors"] = json::array();
     if (!result.ok) return j;
 
     const topology_map::algorithms::FrenetTrackBuilder track_builder;
@@ -1802,6 +1804,25 @@ json laneRegionDebugToJson(
     const auto completed_result = completed_boundary_builder.build(result, track_result, completion_result);
     const topology_map::algorithms::FrenetLaneRegionBuilder region_builder;
     const auto region_result = region_builder.build(result, completed_result);
+
+    for (const auto& track : completed_result.tracks) {
+        j["completed_boundary_tracks"].push_back({
+            {"id", track.id},
+            {"source_track_ids", track.source_track_ids},
+            {"source_type", track.source_type},
+            {"node_count", track.nodes.size()}
+        });
+    }
+    for (const auto& connector : completed_result.connectors) {
+        j["completed_boundary_connectors"].push_back({
+            {"from_track_id", connector.from_track_id},
+            {"to_track_id", connector.to_track_id},
+            {"from_s", connector.from_s},
+            {"from_l", connector.from_l},
+            {"to_s", connector.to_s},
+            {"to_l", connector.to_l}
+        });
+    }
 
     int candidate_count = 0;
     int inferred_region_count = 0;
