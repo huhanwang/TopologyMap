@@ -1,0 +1,43 @@
+{
+  "db": "/media/edward/MAPLOC/Data/DB/noa/byd-han/06/0601/rtk路段/apa_t68g_datatypev1.0.50-26-06-01-20-31-29.db",
+  "main_axis": {
+    "topic": "FusedStatic",
+    "time_type": "raw_timestamp",
+    "range": {
+      "type": "all"
+    }
+  },
+  "sync": {
+    "mode": "previous_or_equal"
+  },
+  "topics": [
+    "FusedStatic",
+    "AutoSensorGnss",
+    "AutoSDRoute"
+  ],
+  "playback": {
+    "sleep_ms": 0
+  },
+  "output": {
+    "dir": "offline_replay/out/fusedstatic_gnss_sdroute_0601_rtk",
+    "frame_dir_width": 10,
+    "write_raw_blobs": true,
+    "skip_existing": false,
+    "write_files": [
+      "frame",
+      "sync",
+      "preprocess",
+      "viz",
+      "visual_reference",
+      "sd_route_debug",
+      "navigation_tracker",
+      "navigation_reference",
+      "fused_reference",
+      "boundary_intersections",
+      "frenet_topology_debug",
+      "lane_center_debug",
+      "boundary_completion_debug",
+      "lane_region_debug"
+    ]
+  }
+}

@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Offline Replay Viewer</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar">
+        <header class="brand-block">
+          <h1>Replay Viewer</h1>
+          <div id="bundleMeta" class="meta-line">No dataset loaded</div>
+        </header>
+
+        <section class="control-section">
+          <label for="datasetPath">Dataset Path</label>
+          <input id="datasetPath" type="text" autocomplete="off" value="/offline_replay/out/fusedstatic_gnss_sdroute_0601_rtk" />
+          <button id="loadDataset" type="button">Load</button>
+        </section>
+
+        <section class="control-section">
+          <label for="frameProgress">Frame</label>
+          <input id="frameProgress" type="range" min="0" max="0" step="1" value="0" />
+          <div id="frameProgressText" class="meta-line">0 / 0</div>
+          <div class="button-row">
+            <button id="prevFrame" type="button">上一帧</button>
+            <button id="nextFrame" type="button">下一帧</button>
+          </div>
+        </section>
+
+        <section class="control-section">
+          <label for="frameJumpInput">Jump Frame ID</label>
+          <div class="jump-row">
+            <input id="frameJumpInput" type="number" min="0" step="1" placeholder="10233" />
+            <button id="frameJumpButton" type="button">跳转</button>
+          </div>
+          <div id="frameJumpStatus" class="meta-line">输入主轴帧号跳转</div>
+        </section>
+
+        <section class="control-section">
+          <div class="layer-title">View</div>
+          <div class="segmented-control" role="group" aria-label="Scene mode">
+            <button id="modeBev" type="button" class="is-active">BEV</button>
+            <button id="modeFrenet" type="button">Frenet</button>
+          </div>
+          <label><input id="showVehicle" type="checkbox" checked /> vehicle_bev_lanes</label>
+          <label><input id="showRoute" type="checkbox" checked /> SDRoute VCS</label>
+          <label><input id="showNavigationTracker" type="checkbox" checked /> Navigation Tracker</label>
+          <label><input id="showNavigationReference" type="checkbox" checked /> Navigation Reference</label>
+          <label><input id="showFusedReference" type="checkbox" checked /> Fused Reference</label>
+          <label><input id="showVisualReference" type="checkbox" checked /> Visual Reference</label>
+          <label><input id="showRawIntersection" type="checkbox" checked /> Raw Intersection</label>
+          <label><input id="showFrenetTracks" type="checkbox" checked /> Frenet Tracks</label>
+          <label><input id="showFrenetRibbons" type="checkbox" checked /> Frenet Ribbons</label>
+          <label><input id="showRibbonCenters" type="checkbox" checked /> Ribbon Centers</label>
+          <label><input id="showLaneCenters" type="checkbox" checked /> Lane Centers</label>
+          <label><input id="showLaneTracks" type="checkbox" checked /> Lane Tracks</label>
+          <label><input id="showLaneRegions" type="checkbox" checked /> Lane Regions</label>
+          <label><input id="showBoundaryCompletion" type="checkbox" checked /> Boundary Completion</label>
+          <label><input id="showLabels" type="checkbox" /> 标签</label>
+          <label><input id="showPoints" type="checkbox" /> 点</label>
+          <div class="button-row">
+            <button id="fitView" type="button">Fit</button>
+            <button id="resetView" type="button">Reset</button>
+          </div>
+        </section>
+
+        <section class="control-section">
+          <div class="layer-title">Frame Info</div>
+          <dl id="frameStats"></dl>
+        </section>
+
+        <section class="control-section">
+          <div class="layer-title">Navigation</div>
+          <dl id="navigationStatus"></dl>
+        </section>
+
+        <pre id="debugPanel" hidden>{}</pre>
+      </aside>
+
+      <section class="workspace">
+        <canvas id="sceneCanvas" aria-label="Offline replay canvas"></canvas>
+        <div id="sceneMeta" class="scene-meta">No scene</div>
+      </section>
+    </main>
+
+    <script src="./viewer.js?v=lane_regions"></script>
+  </body>
+</html>
